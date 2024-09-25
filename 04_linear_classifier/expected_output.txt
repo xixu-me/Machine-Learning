@@ -1,0 +1,8 @@
+===================
+perceptron:
+  learner grade: 0.5
+  error ration: 0.3466666666666667
+===================
+logistic:
+  learner grade: 0.3333333333333333
+  error ration: 0.6066666666666667

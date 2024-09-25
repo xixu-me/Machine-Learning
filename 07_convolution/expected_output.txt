@@ -1,0 +1,64 @@
+Train #: 60000; Test #: 10000
+Labels: tensor([5, 0, 4, 1, 9, 2, 1, 3]); Batch shape: torch.Size([8, 1, 28, 28])
+LeNet(
+  (dnn_model): Sequential(
+    (0): Conv2d(1, 32, kernel_size=(5, 5), stride=(1, 1))
+    (1): ReLU()
+    (2): Conv2d(32, 32, kernel_size=(5, 5), stride=(1, 1))
+    (3): ReLU()
+    (4): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (5): Conv2d(32, 64, kernel_size=(5, 5), stride=(1, 1))
+    (6): ReLU()
+    (7): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (8): Flatten(start_dim=1, end_dim=-1)
+    (9): Linear(in_features=576, out_features=256, bias=True)
+    (10): ReLU()
+    (11): Linear(in_features=256, out_features=10, bias=True)
+  )
+)
+Epoch 1
+-------------------------------
+loss: 2.299683  [    0/60000]
+loss: 0.348185  [25600/60000]
+loss: 0.239826  [51200/60000]
+Test Error: 
+ Accuracy: 95.7%, Avg loss: 0.133152 
+
+Epoch 2
+-------------------------------
+loss: 0.220472  [    0/60000]
+loss: 0.056995  [25600/60000]
+loss: 0.078447  [51200/60000]
+Test Error: 
+ Accuracy: 90.3%, Avg loss: 0.284392 
+
+Epoch 3
+-------------------------------
+loss: 0.255085  [    0/60000]
+loss: 0.071809  [25600/60000]
+loss: 0.080565  [51200/60000]
+Test Error: 
+ Accuracy: 98.2%, Avg loss: 0.056539 
+
+Epoch 4
+-------------------------------
+loss: 0.074963  [    0/60000]
+loss: 0.053749  [25600/60000]
+loss: 0.042180  [51200/60000]
+Test Error: 
+ Accuracy: 98.3%, Avg loss: 0.048151 
+
+Epoch 5
+-------------------------------
+loss: 0.018707  [    0/60000]
+loss: 0.047416  [25600/60000]
+loss: 0.022978  [51200/60000]
+Test Error: 
+ Accuracy: 98.6%, Avg loss: 0.041758 
+
+Done!
+Labels    : tensor([5, 0, 4, 1, 9, 2, 1, 3])
+Prediction: tensor([5, 0, 4, 1, 9, 2, 1, 3])
+Accuracy: 98.60
+loaded image shape: torch.Size([1, 1, 28, 28])
+Predicted: "0", Actual: "6"

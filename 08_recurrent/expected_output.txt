@@ -1,0 +1,42 @@
+58 legal letters: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ .,;'-
+18 categories: ['Czech', 'German', 'Arabic', 'Japanese', 'Chinese', 'Vietnamese', 'Russian', 'French', 'Irish', 'English', 'Spanish', 'Greek', 'Italian', 'Portuguese', 'Scottish', 'Dutch', 'Korean', 'Polish']
+first 5 Chinese names: ['Ang', 'Au-Yong', 'Bai', 'Ban', 'Bao']
+RNN(
+  (i2h): Linear(in_features=186, out_features=128, bias=True)
+  (i2o): Linear(in_features=186, out_features=18, bias=True)
+  (softmax): LogSoftmax(dim=1)
+)
+  5000   5.0% (0m  9s) 2.5912 2541.35 Zimmerman / Dutch ✗ (German)
+ 10000  10.0% (0m 18s) 1.5788 2128.60 Gong / Vietnamese ✗ (Chinese)
+ 15000  15.0% (0m 26s) 2.7233 1998.65 Solo / Chinese ✗ (Spanish)
+ 20000  20.0% (0m 36s) 1.8938 1815.65 Lohrenz / Spanish ✗ (German)
+ 25000  25.0% (0m 44s) 2.3676 1735.06 Hoch / Vietnamese ✗ (German)
+ 30000  30.0% (0m 52s) 1.8657 1634.36 Macfarland / French ✗ (Irish)
+ 35000  35.0% (1m  4s) 1.5567 1658.71 Devin / French ✗ (Irish)
+ 40000  40.0% (1m 14s) 3.7105 1568.38 Farmer / French ✗ (English)
+ 45000  45.0% (1m 22s) 1.9464 1524.05 Arthur / Arabic ✗ (French)
+ 50000  50.0% (1m 32s) 2.1889 1463.57 Nemec / Portuguese ✗ (Czech)
+ 55000  55.0% (1m 42s) 0.6579 1500.78 Naser / Arabic ✓
+ 60000  60.0% (1m 50s) 0.7514 1427.26 Gallego / Spanish ✓
+ 65000  65.0% (1m 58s) 0.8220 1383.95 Kawate / Japanese ✓
+ 70000  70.0% (2m  6s) 0.7611 1319.17 Graner / German ✓
+ 75000  75.0% (2m 14s) 1.2482 1331.15 Guerrero / Spanish ✓
+ 80000  80.0% (2m 23s) 0.0109 1306.75 Antoniadis / Greek ✓
+ 85000  85.0% (2m 31s) 0.0735 1404.86 O'Boyle / Irish ✓
+ 90000  90.0% (2m 39s) 0.8547 1258.60 Said / Arabic ✓
+ 95000  95.0% (2m 47s) 1.2185 1329.16 Dickson / English ✗ (Scottish)
+100000 100.0% (2m 55s) 1.6481 1295.43 Abana / Italian ✗ (Spanish)
+prediction for Wu:
+  (-0.70) Korean
+  (-1.36) Vietnamese
+  (-2.53) Chinese
+prediction for Harry:
+  (-1.27) Arabic
+  (-1.63) English
+  (-1.81) French
+prediction for Louis:
+  (-1.16) Arabic
+  (-1.45) Greek
+  (-1.58) Portuguese
+correct rate (per category): Czech:  40.0; German:  66.7; Arabic:  33.3; Japanese:  25.0; Chinese:  14.3; Vietnamese:  30.0; Russian:   0.0; French:  50.0; Irish:  20.0; English:  85.7; Spanish:  14.3; Greek:   0.0; Italian:  14.3; Portuguese:  20.0; Scottish:  25.0; Dutch:   0.0; Korean:  66.7; Polish:   0.0; 
+total correct rate:  28.1
