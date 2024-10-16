@@ -158,3 +158,7 @@ if __name__ == "__main__":
     gd2 = LinearRegressionGD2(hp)
     gd2.solve(lr, num_epochs)
     print(f"next prediction year (GD2): {gd2.linout([len(hp)])}")
+
+    lr = 0.03
+    gd1.solve(lr, num_epochs)
+    print(f"next prediction year (GD1, learning rate 0.03): {gd1.linout([len(hp)])}")
