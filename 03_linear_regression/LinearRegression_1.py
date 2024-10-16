@@ -23,15 +23,17 @@ class LinearRegressionLS(LinearRegression):
 
     def homogeneous(self, xlist):
         """build homogeneous coordinates"""
-        raise NotImplementedError
+        return np.column_stack((np.ones(len(xlist)), xlist))
 
     def linout(self, xlist):
         """linear output for given data"""
-        raise NotImplementedError
+        X = self.homogeneous(xlist)
+        return np.dot(X, self.w)
 
     def loss_sq(self, X, Y):
         """loss function: (half) sum of square errors"""
-        raise NotImplementedError
+        Y_pred = self.linout(X[:, 1])
+        return 0.5 * np.sum((Y_pred - Y) ** 2)
 
     def solve(self, lr, nepoch):
         """form normal equation"""
@@ -54,36 +56,36 @@ class LinearRegressionGD1(LinearRegression):
 
     def __init__(self, ylist):
         num_data = len(ylist)
-        self.X = self.homogeneous([x for x in range(num_data)])
+        self.X = np.array([x for x in range(num_data)]).reshape(
+            -1, 1
+        )  # Changed this line
         self.Y = np.array(ylist).reshape(num_data, 1)
-        self.w = np.random.rand(2)
+        self.w = np.random.rand(2, 1)  # Changed this line
 
     def homogeneous(self, xlist):
         """build homogeneous coordinates"""
-        raise NotImplementedError
+        return np.column_stack((np.ones(len(xlist)), xlist))
 
     def linout(self, xlist):
         """linear output for given data"""
-        raise NotImplementedError
+        X = self.homogeneous(xlist)
+        return np.dot(X, self.w)
 
     def loss_sq(self, X, Y):
         """loss function: (half) sum of square errors"""
-        raise NotImplementedError
+        Y_pred = self.linout(X)
+        return 0.5 * np.sum((Y_pred - Y) ** 2)
 
     def gd(self, lr):
         """gradient descent update"""
-
-        def gradient(Y_hat, Y, X):
-            return np.sum((Y_hat - Y) * X, axis=0)
-
+        X = self.homogeneous(self.X)
         Y_hat = self.linout(self.X)
-        # print(Y_hat)
-        grad = gradient(Y_hat, self.Y, self.X)
+        grad = np.dot(X.T, (Y_hat - self.Y))
         self.w -= lr * grad
 
     def solve(self, lr, nepoch):
         """iterative solver"""
-        for epoch in range(num_epochs):
+        for epoch in range(nepoch):
             self.gd(lr)
             print(f"epoch {epoch + 1}, loss {self.loss_sq(self.X, self.Y)}")
 
@@ -92,40 +94,35 @@ class LinearRegressionGD2(LinearRegression):
     X: np.array
     Y: np.array
     w: np.array
-    b: np.array
+    b: float  # Changed this line
 
     def __init__(self, ylist):
         num_data = len(ylist)
         self.X = np.array([x for x in range(num_data)]).reshape(-1, 1)
         self.Y = np.array(ylist).reshape(num_data, 1)
-        self.w = np.random.rand(1)
-        self.b = np.min(ylist)
+        self.w = np.random.rand(1, 1)  # Changed this line
+        self.b = np.random.rand()  # Changed this line
 
     def linout(self, xlist):
         """linear output for given data"""
-        raise NotImplementedError
+        return np.dot(xlist, self.w) + self.b
 
     def loss_sq(self, X, Y):
         """loss function: (half) sum of square errors"""
-        raise NotImplementedError
+        Y_pred = self.linout(X)
+        return 0.5 * np.sum((Y_pred - Y) ** 2)
 
     def gd(self, lr):
         """gradient descent update"""
-
-        def gradient(Y_hat, Y, X):
-            return np.array(
-                [np.sum((Y_hat - Y) * X, axis=0), np.sum((Y_hat - Y), axis=0)]
-            )
-
         Y_hat = self.linout(self.X)
-        # print(Y_hat)
-        grad = gradient(Y_hat, self.Y, self.X)
-        self.w -= lr * grad[0]
-        self.b -= lr * grad[1]
+        dw = np.dot(self.X.T, (Y_hat - self.Y))
+        db = np.sum(Y_hat - self.Y)
+        self.w -= lr * dw
+        self.b -= lr * db
 
     def solve(self, lr, nepoch):
         """iterative solver"""
-        for epoch in range(num_epochs):
+        for epoch in range(nepoch):
             self.gd(lr)
             print(f"epoch {epoch + 1}, loss {self.loss_sq(self.X, self.Y)}")
 
@@ -158,6 +155,6 @@ if __name__ == "__main__":
     gd1.solve(lr, num_epochs)
     print(f"next prediction year (GD1): {gd1.linout([len(hp)])}")
 
-    gd2 = LinearRegressionGD1(hp)
+    gd2 = LinearRegressionGD2(hp)
     gd2.solve(lr, num_epochs)
     print(f"next prediction year (GD2): {gd2.linout([len(hp)])}")
