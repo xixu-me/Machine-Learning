@@ -101,7 +101,11 @@ class LogisticLinearLeaner(LinearClassifier):
 
         def loss(example, w, idx_i, idx_t, h):
             """error: difference between estimation and true value"""
-            raise NotImplementedError
+            x = [1] + [example[i] for i in idx_i]
+            y = example[idx_t]
+            h_x = sigmoid(np.dot(w, x))
+            h.append(h_x)
+            return h_x - y
 
         def update(w, learning_rate, err, h, X_col, num_examples):
             """update weights"""
@@ -111,7 +115,10 @@ class LogisticLinearLeaner(LinearClassifier):
 
         def homogeneous(num_examples):
             """build homogeneous coordinates"""
-            raise NotImplementedError
+            X_col = [[1] * num_examples] + [
+                [example[i] for example in self.examples] for i in self.idx_i
+            ]
+            return X_col
 
         X_col = homogeneous(self.num_examples)
         for epoch in range(epochs):
@@ -126,7 +133,7 @@ class LogisticLinearLeaner(LinearClassifier):
 
     def predict(self, x):
         """make prediction"""
-        return int(np.dot(self.w, [1] + x))
+        return int(sigmoid(np.dot(self.w, [1] + x)) > 0.5)
 
 
 if __name__ == "__main__":
