@@ -35,7 +35,18 @@ class PerceptionLinearLearner(LinearClassifier):
 
         def loss(example, w, idx_i, idx_t):
             """error: difference between estimation and true value"""
-            raise NotImplementedError
+            # Get input features and true target value
+            x = [example[i] for i in idx_i]
+            y = example[idx_t]
+
+            # Add bias term (1) to input features
+            x = [1] + x
+
+            # Calculate predicted value using dot product
+            prediction = np.dot(w, x)
+
+            # Return difference between prediction and true value
+            return prediction - y
 
         def update(w, learning_rate, err, X_col, num_examples):
             """update weights"""
@@ -44,7 +55,18 @@ class PerceptionLinearLearner(LinearClassifier):
 
         def homogeneous(num_examples):
             """build homogeneous coordinates"""
-            raise NotImplementedError
+            # Initialize matrix with zeros
+            X = np.zeros((len(self.w), num_examples))
+
+            # Fill the matrix with features
+            for i, example in enumerate(self.examples):
+                # First row is bias terms (all 1s)
+                X[0][i] = 1
+                # Remaining rows are feature values
+                for j, idx in enumerate(self.idx_i, 1):
+                    X[j][i] = example[idx]
+
+            return X
 
         X_col = homogeneous(self.num_examples)
         for epoch in range(epochs):
