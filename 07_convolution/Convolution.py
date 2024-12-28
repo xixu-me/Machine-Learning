@@ -98,11 +98,28 @@ class LeNet(FFNet):
         super(LeNet, self).__init__()
 
     def build_model(self):
-        """build specific model"""
-        raise NotImplementedError
+        """Build LeNet-5 CNN architecture"""
+        return nn.Sequential(
+            # First convolution block
+            nn.Conv2d(1, 6, kernel_size=5, padding=2),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            # Second convolution block
+            nn.Conv2d(6, 16, kernel_size=5),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            # Flatten layer
+            nn.Flatten(),
+            # Fully connected layers
+            nn.Linear(16 * 5 * 5, 120),
+            nn.ReLU(),
+            nn.Linear(120, 84),
+            nn.ReLU(),
+            nn.Linear(84, 10),
+        )
 
     def forward(self, x):
-        """feed data forward and return result"""
+        """Feed data forward and return result"""
         return self.dnn_model(x)
 
 
